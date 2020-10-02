@@ -7,7 +7,7 @@
 
 #include "tset.h"
 
-TSet::TSet(int mp) : BitField(-1)
+TSet::TSet(size_t mp) : BitField(-1)
 {
 }
 
@@ -25,7 +25,7 @@ TSet::operator TBitField()
 {
 }
 
-int TSet::GetMaxPower(void) const // получить макс. к-во эл-тов
+size_t TSet::GetMaxPower() const // получить макс. к-во эл-тов
 {
 }
 
@@ -46,43 +46,52 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
 
 TSet& TSet::operator=(const TSet &s) // присваивание
 {
+    return *this;
 }
 
-int TSet::operator==(const TSet &s) const // сравнение
+bool TSet::operator==(const TSet &s) const // сравнение
 {
-    return 0;
+    return false;
 }
 
-int TSet::operator!=(const TSet &s) const // сравнение
+bool TSet::operator!=(const TSet &s) const // сравнение
 {
+    return false;
 }
 
 TSet TSet::operator+(const TSet &s) // объединение
 {
+    return *this;
 }
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
+    return *this;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
+    return *this;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
 {
+    return *this;
 }
 
-TSet TSet::operator~(void) // дополнение
+TSet TSet::operator~() // дополнение
 {
+    return *this;
 }
 
 // перегрузка ввода/вывода
 
-istream &operator>>(istream &istr, TSet &s) // ввод
+std::istream &operator>>(std::istream &istream, TSet &s) // ввод
 {
+    return istream;
 }
 
-ostream& operator<<(ostream &ostr, const TSet &s) // вывод
+std::ostream& operator<<(std::ostream &ostream, const TSet &s) // вывод
 {
+    return ostream;
 }
