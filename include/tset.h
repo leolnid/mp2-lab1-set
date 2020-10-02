@@ -13,31 +13,32 @@
 class TSet
 {
 private:
-  size_t MaxPower;       // максимальная мощность множества
+  size_t MaxPower;    // максимальная мощность множества
   TBitField BitField; // битовое поле для хранения характеристического вектора
 public:
   TSet(size_t mp);
   TSet(const TSet &s);       // конструктор копирования
   TSet(const TBitField &bf); // конструктор преобразования типа
-  operator TBitField();      // преобразование типа к битовому полю
+  explicit operator TBitField(); // преобразование типа к битовому полю
 
   // доступ к битам
   size_t GetMaxPower() const;     // максимальная мощность множества
   void InsElem(const int Elem);       // включить элемент в множество
   void DelElem(const int Elem);       // удалить элемент из множества
-  int IsMember(const int Elem) const; // проверить наличие элемента в множестве
+  bool IsMember(const int Elem) const; // проверить наличие элемента в множестве
 
   // теоретико-множественные операции
   bool operator== (const TSet &s) const; // сравнение
   bool operator!= (const TSet &s) const; // сравнение
   TSet& operator=(const TSet &s);  // присваивание
-  TSet operator+ (const int Elem); // объединение с элементом
+  TSet& operator+ (const int Elem) const; // объединение с элементом
                                    // элемент должен быть из того же универса
-  TSet operator- (const int Elem); // разность с элементом
+  TSet& operator- (const int Elem) const; // разность с элементом
                                    // элемент должен быть из того же универса
-  TSet operator+ (const TSet &s);  // объединение
-  TSet operator* (const TSet &s);  // пересечение
-  TSet operator~ ();           // дополнение
+  TSet& operator+ (const TSet &s) const;  // объединение
+  TSet& operator- (const TSet &s) const;  // объединение
+  TSet& operator* (const TSet &s) const;  // пересечение
+  TSet& operator~ () const;           // дополнение
 
   friend std::istream &operator>>(std::istream &istream, TSet &bf);
   friend std::ostream &operator<<(std::ostream &ostream, const TSet &bf);

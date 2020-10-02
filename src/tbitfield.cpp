@@ -140,8 +140,8 @@ TBitField& TBitField::operator|(const TBitField &bf) const // операция "
 
 TBitField& TBitField::operator&(const TBitField &bf) const // операция "и"
 {
-    if (this->MemLen < bf.MemLen)
-        return bf | *this;
+    if (this->BitLen < bf.BitLen)
+        return bf & *this;
 
     auto result = new TBitField(*this);
     for (int i = 0; i < bf.MemLen; ++i) {
@@ -165,21 +165,32 @@ TBitField& TBitField::operator~() const // отрицание
 
 std::istream &operator>>(std::istream &istream, TBitField &bf) // ввод
 {
-    size_t size = 0;
-    istream >> size;
-    bf = *new TBitField(size);
+    int i = 0;
+    char ch;
+    do {
+        istream >> ch;
+    } while (ch != ' ');
 
-    for (size_t i = bf.MemLen; i > 0; --i) {
-        istream >> std::hex >> bf.pMem[i - 1];
+    while (true) {
+        istream >> ch;
+        if (ch == '0') {
+            bf.ClrBit(++i);
+            continue;
+        } else if (ch == '1') {
+            bf.SetBit(++i);
+            continue;
+        } else {
+            break;
+        }
     }
+
     return istream;
 }
 
 std::ostream &operator<<(std::ostream &ostream, const TBitField &bf) // вывод
 {
-    ostream << bf.BitLen << " ";
-    for (size_t i = bf.MemLen; i > 0; --i) {
-        ostream << std::hex << bf.pMem[i - 1] << " ";
+    for (size_t i = 0; i < bf.BitLen; ++i) {
+        ostream << (bf.GetBit(i) ? "1" : "0");
     }
     return ostream;
 }

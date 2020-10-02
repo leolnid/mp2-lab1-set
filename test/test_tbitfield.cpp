@@ -311,3 +311,42 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
 
     EXPECT_NE(bf1, bf2);
 }
+
+TEST(TBitField, bitfields_input)
+{
+    const int size = 8;
+    TBitField bf1(size), bf2(size);
+    bf1.SetBit(2);
+    bf1.SetBit(4);
+    bf1.SetBit(6);
+
+    std::stringstream ss;
+    ss << "2a";
+    ss >> bf2;
+
+    EXPECT_TRUE(bf1 == bf2);
+}
+
+TEST(TBitField, bitfields_triple_or)
+{
+    const int size = 8;
+    TBitField bf1(size), bf2(size), bf3(size), bf4(size);
+    bf1.SetBit(2);
+    bf1.SetBit(4);
+
+    bf2.SetBit(1);
+    bf2.SetBit(3);
+
+    bf3.SetBit(0);
+    bf3.SetBit(6);
+
+    bf4.SetBit(2);
+    bf4.SetBit(4);
+    bf4.SetBit(1);
+    bf4.SetBit(3);
+    bf4.SetBit(0);
+    bf4.SetBit(6);
+
+    EXPECT_TRUE(bf4 == (bf1 | bf2 | bf3));
+}
+
