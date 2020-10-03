@@ -53,7 +53,7 @@ size_t TBitField::GetLength() const // получить длину (к-во би
 void TBitField::SetBit(const size_t n) // установить бит
 {
     if (n >= this->BitLen)
-        throw "IndexOutOfBoundException: " + n;
+        throw "Index out of bound exception. 🛠";
 
     this->pMem[this->GetMemIndex(n)] |= this->GetMemMask(n);
 }
@@ -61,7 +61,7 @@ void TBitField::SetBit(const size_t n) // установить бит
 void TBitField::ClrBit(const size_t n) // очистить бит
 {
     if (n >= this->BitLen)
-        throw "IndexOutOfBoundException: " + n;
+        throw "Index out of bound exception. 🛠";
 
     this->pMem[this->GetMemIndex(n)] &= ~this->GetMemMask(n);
 }
@@ -69,7 +69,7 @@ void TBitField::ClrBit(const size_t n) // очистить бит
 size_t TBitField::GetBit(const size_t n) const // получить значение бита
 {
     if (n >= this->BitLen)
-        throw "IndexOutOfBoundException: " + n;
+        throw "Index out of bound exception. 🛠";
 
     return this->pMem[this->GetMemIndex(n)] & this->GetMemMask(n);
 }
@@ -78,6 +78,9 @@ size_t TBitField::GetBit(const size_t n) const // получить значен�
 
 TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 {
+    if (this->BitLen == bf.BitLen && this->pMem == bf.pMem)
+        return *this;
+
     if (this->MemLen != bf.MemLen) {
         this->MemLen = bf.MemLen;
 
@@ -91,7 +94,7 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
         for (int i = 0; i < this->MemLen; ++i)
             this->pMem[i] = bf.pMem[i];
     } else {
-        throw "Cannot allocate memory";
+        throw "Cannot allocate memory. 🛠";
     }
 
     return *this;

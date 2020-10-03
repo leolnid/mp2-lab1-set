@@ -33,7 +33,7 @@ bool TSet::IsMember(const int Elem) const // элемент множества?
 void TSet::InsElem(const int Elem) // включение элемента множества
 {
     if (Elem > MaxPower)
-        throw "Too big for this set. 🛠: " + Elem;
+        throw "Element is not in this universe. 🛠";
 
     this->BitField.SetBit(Elem);
 }
@@ -41,7 +41,7 @@ void TSet::InsElem(const int Elem) // включение элемента мно
 void TSet::DelElem(const int Elem) // исключение элемента множества
 {
     if (Elem > MaxPower)
-        throw "Too big for this set. 🛠: " + Elem;
+        throw "Element is not in this universe. 🛠";
 
     this->BitField.ClrBit(Elem);
 }
@@ -78,7 +78,6 @@ TSet& TSet::operator+(const TSet &s) const // объединение
 TSet &TSet::operator-(const TSet &s) const {
     return *this * ~s;
 }
-
 
 TSet& TSet::operator*(const TSet &s) const // пересечение
 {
