@@ -50,19 +50,19 @@ TEST(TBitField, can_clear_bit)
   EXPECT_EQ(0, bf.GetBit(bitIdx));
 }
 
-// TODO: Error in compile state don't catches
-//       Negative number are not allowed
+// TODO: -3 вызывает переполнение в типе size_t
+//       и становится просто очень большим числом...
 //TEST(TBitField, throws_when_create_bitfield_with_negative_length)
 //{
 //  ASSERT_ANY_THROW(TBitField bf(-3));
 //}
-//
-//TEST(TBitField, throws_when_set_bit_with_negative_index)
-//{
-//  TBitField bf(10);
-//
-//  ASSERT_ANY_THROW(bf.SetBit(-3));
-//}
+
+TEST(TBitField, throws_when_set_bit_with_negative_index)
+{
+  TBitField bf(10);
+
+  ASSERT_ANY_THROW(bf.SetBit(-3));
+}
 
 TEST(TBitField, throws_when_set_bit_with_too_large_index)
 {
@@ -71,12 +71,12 @@ TEST(TBitField, throws_when_set_bit_with_too_large_index)
   ASSERT_ANY_THROW(bf.SetBit(11));
 }
 
-//TEST(TBitField, throws_when_get_bit_with_negative_index)
-//{
-//  TBitField bf(10);
-//
-//  ASSERT_ANY_THROW(bf.GetBit(-3));
-//}
+TEST(TBitField, throws_when_get_bit_with_negative_index)
+{
+  TBitField bf(10);
+
+  ASSERT_ANY_THROW(bf.GetBit(-3));
+}
 
 TEST(TBitField, throws_when_get_bit_with_too_large_index)
 {
@@ -85,12 +85,12 @@ TEST(TBitField, throws_when_get_bit_with_too_large_index)
   ASSERT_ANY_THROW(bf.GetBit(11));
 }
 
-//TEST(TBitField, throws_when_clear_bit_with_negative_index)
-//{
-//  TBitField bf(10);
-//
-//  ASSERT_ANY_THROW(bf.ClrBit(-3));
-//}
+TEST(TBitField, throws_when_clear_bit_with_negative_index)
+{
+  TBitField bf(10);
+
+  ASSERT_ANY_THROW(bf.ClrBit(-3));
+}
 
 TEST(TBitField, throws_when_clear_bit_with_too_large_index)
 {
