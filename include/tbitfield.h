@@ -11,11 +11,12 @@
 #include <iostream>
 
 typedef unsigned int TELEM;
+#define TYPE_MASK 31
 
 class TBitField
 {
 private:
-  size_t  BitLen; // длина битового поля - макс. к-во битов
+  size_t BitLen; // длина битового поля - макс. к-во битов
   TELEM *pMem; // память для представления битового поля
   size_t  MemLen; // к-во эл-тов Мем для представления бит.поля
 

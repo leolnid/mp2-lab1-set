@@ -321,16 +321,16 @@ TEST(TBitField, bitfields_input)
     bf1.SetBit(6);
 
     std::stringstream ss;
-    ss << "2a";
+    ss << bf1;
     ss >> bf2;
 
-    EXPECT_TRUE(bf1 == bf2);
+    EXPECT_EQ(bf1, bf2);
 }
 
 TEST(TBitField, bitfields_triple_or)
 {
     const int size = 8;
-    TBitField bf1(size), bf2(size), bf3(size), bf4(size);
+    TBitField bf1(size), bf2(size), bf3(size), bf4(size), bfRes(size);
     bf1.SetBit(2);
     bf1.SetBit(4);
 
@@ -347,6 +347,8 @@ TEST(TBitField, bitfields_triple_or)
     bf4.SetBit(0);
     bf4.SetBit(6);
 
-    EXPECT_TRUE(bf4 == (bf1 | bf2 | bf3));
+    bfRes = bf1 | bf2 | bf3;
+
+    EXPECT_EQ(bf4, bfRes);
 }
 

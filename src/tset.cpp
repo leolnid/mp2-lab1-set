@@ -69,9 +69,7 @@ TSet& TSet::operator+(const TSet &s) const // объединение
     if (this->MaxPower < s.MaxPower)
         return s + *this;
 
-    auto result = new TSet(this->MaxPower);
-    result->BitField = this->BitField | s.BitField;
-
+    auto result = new TSet(this->BitField | s.BitField);
     return *result;
 }
 
@@ -81,12 +79,10 @@ TSet &TSet::operator-(const TSet &s) const {
 
 TSet& TSet::operator*(const TSet &s) const // пересечение
 {
-    if (this->MaxPower < s.MaxPower)
+    if (this->MaxPower > s.MaxPower)
         return s + *this;
 
-    auto result = new TSet(this->MaxPower);
-    result->BitField = this->BitField & s.BitField;
-
+    auto result = new TSet(this->BitField & s.BitField);
     return *result;
 }
 
@@ -109,8 +105,7 @@ TSet& TSet::operator-(const int Elem) const // разность с элемен�
 
 TSet& TSet::operator~() const // дополнение
 {
-    auto result = new TSet(*this);
-    result->BitField = ~result->BitField;
+    auto result = new TSet(~this->BitField);
     return *result;
 }
 
@@ -150,3 +145,4 @@ std::ostream& operator<<(std::ostream &ostream, const TSet &s) // вывод
     ostream << " }";
     return ostream;
 }
+
