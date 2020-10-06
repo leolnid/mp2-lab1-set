@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-typedef short int TELEM;
+typedef unsigned int TELEM;
 #define TYPE_MASK ((sizeof(TELEM) << 3) - 1)
 
 class TBitField {
