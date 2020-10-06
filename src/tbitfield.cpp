@@ -21,7 +21,16 @@ TBitField::TBitField(size_t len)
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
-    *this = bf;
+    this->MemLen = bf.MemLen;
+    this->BitLen = bf.BitLen;
+
+    this->pMem = new TELEM[this->MemLen];
+
+    if (this->pMem == nullptr || bf.pMem == nullptr)
+        throw "Cannot allocate memory. 🛠";
+
+    for (int i = 0; i < this->MemLen; ++i)
+        this->pMem[i] = bf.pMem[i];
 }
 
 TBitField::~TBitField()
@@ -82,18 +91,17 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
     if (this->MemLen != bf.MemLen) {
         this->MemLen = bf.MemLen;
 
-        delete pMem;
+        delete this->pMem;
         this->pMem = new TELEM[this->MemLen];
     }
 
     this->BitLen = bf.BitLen;
 
-    if (this->pMem != nullptr && bf.pMem != nullptr) {
-        for (int i = 0; i < this->MemLen; ++i)
-            this->pMem[i] = bf.pMem[i];
-    } else {
+    if (this->pMem == nullptr || bf.pMem == nullptr)
         throw "Cannot allocate memory. 🛠";
-    }
+
+    for (int i = 0; i < this->MemLen; ++i)
+        this->pMem[i] = bf.pMem[i];
 
     return *this;
 }
