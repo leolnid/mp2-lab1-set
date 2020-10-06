@@ -10,10 +10,10 @@
 TBitField::TBitField(size_t len)
 {
     this->BitLen = len;
-    this->MemLen = len >> (sizeof(TELEM) + 1);
 
     // TODO: Fix magic 31
-    if (len & 31) this->MemLen++;
+    this->MemLen = (len >> (sizeof(TELEM) + 1)) + ((len & 31)? 1: 0);
+    std::cout << len << " " << this->MemLen << std::endl;
 
     pMem = new TELEM[this->MemLen];
     if (pMem != nullptr)
@@ -28,12 +28,14 @@ TBitField::TBitField(const TBitField &bf) // конструктор копиро
 
 TBitField::~TBitField()
 {
-    delete this->pMem;
+    if (this->pMem != nullptr) // Clang-Tidy: 'if' statement is unnecessary; deleting null pointer has no effect
+        delete this->pMem;
     this->pMem = nullptr;
 }
 
 size_t TBitField::GetMemIndex(const size_t n) const // индекс Мем для бита n
 {
+    std::cout << n << " " << (n >> (sizeof(TELEM) + 1)) << std::endl;
     return n >> (sizeof(TELEM) + 1);
 }
 
