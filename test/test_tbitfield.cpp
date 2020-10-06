@@ -2,6 +2,26 @@
 
 #include <gtest.h>
 
+TEST(TBitField, can_create_bitfield_with_zero_length)
+{
+    ASSERT_NO_THROW(TBitField bf(0));
+}
+
+TEST(TBitField, can_get_length_bitfield_with_zero_length)
+{
+    TBitField bf(0);
+
+    ASSERT_EQ(0, bf.GetLength());
+}
+
+TEST(TBitField, simple_test)
+{
+    size_t size = 35;
+    TBitField bf(size);
+
+    ASSERT_EQ(size, bf.GetLength());
+}
+
 TEST(TBitField, can_create_bitfield_with_positive_length)
 {
   ASSERT_NO_THROW(TBitField bf(3));
