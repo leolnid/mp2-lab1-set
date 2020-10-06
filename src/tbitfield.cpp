@@ -13,7 +13,6 @@ TBitField::TBitField(size_t len)
 
     // TODO: Fix magic 31
     this->MemLen = (len >> (sizeof(TELEM) + 1)) + ((len & 31)? 1: 0);
-    std::cout << len << " " << this->MemLen << std::endl;
 
     pMem = new TELEM[this->MemLen];
     if (pMem != nullptr)
@@ -35,7 +34,6 @@ TBitField::~TBitField()
 
 size_t TBitField::GetMemIndex(const size_t n) const // индекс Мем для бита n
 {
-    std::cout << n << " " << (n >> (sizeof(TELEM) + 1)) << std::endl;
     return n >> (sizeof(TELEM) + 1);
 }
 
