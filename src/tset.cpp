@@ -5,14 +5,16 @@
 //
 // Множество - реализация через битовые поля
 
+#include <fstream>
 #include "tset.h"
 
 TSet::TSet(size_t mp) : MaxPower(mp), BitField(mp) {}
+
 TSet::TSet(const TSet &s) : MaxPower(s.MaxPower), BitField(s.BitField) {}
+
 TSet::TSet(const TBitField &bf) : BitField(bf), MaxPower(bf.GetLength()) {}
 
-TSet::operator TBitField()
-{
+TSet::operator TBitField() {
     TBitField result(this->BitField);
     return result;
 }
@@ -46,25 +48,34 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
     this->BitField.ClrBit(Elem);
 }
 
+
+void TSet::SwhElem(const int Elem) {
+    if (Elem > MaxPower)
+        throw "Element is not in this universe. 🛠";
+
+    this->BitField.SwhBit(Elem);
+}
+
+
 // теоретико-множественные операции
 
-TSet& TSet::operator=(const TSet &s) = default;
+TSet &TSet::operator=(const TSet &s) = default;
 
 bool TSet::operator==(const TSet &s) const // сравнение
 {
     return
-        this->MaxPower == s.MaxPower &&
-        this->BitField == s.BitField;
+            this->MaxPower == s.MaxPower &&
+            this->BitField == s.BitField;
 }
 
 bool TSet::operator!=(const TSet &s) const // сравнение
 {
     return
-        this->MaxPower != s.MaxPower ||
-        this->BitField != s.BitField;
+            this->MaxPower != s.MaxPower ||
+            this->BitField != s.BitField;
 }
 
-TSet& TSet::operator+(const TSet &s) const // объединение
+TSet &TSet::operator+(const TSet &s) const // объединение
 {
     if (this->MaxPower < s.MaxPower)
         return s + *this;
@@ -77,7 +88,7 @@ TSet &TSet::operator-(const TSet &s) const {
     return *this * ~s;
 }
 
-TSet& TSet::operator*(const TSet &s) const // пересечение
+TSet &TSet::operator*(const TSet &s) const // пересечение
 {
     if (this->MaxPower > s.MaxPower)
         return s + *this;
@@ -86,7 +97,7 @@ TSet& TSet::operator*(const TSet &s) const // пересечение
     return *result;
 }
 
-TSet& TSet::operator+(const int Elem) const // объединение с элементом
+TSet &TSet::operator+(const int Elem) const // объединение с элементом
 {
     auto result = new TSet(*this);
     result->InsElem(Elem);
@@ -94,7 +105,7 @@ TSet& TSet::operator+(const int Elem) const // объединение с эле�
     return *result;
 }
 
-TSet& TSet::operator-(const int Elem) const // разность с элементом
+TSet &TSet::operator-(const int Elem) const // разность с элементом
 {
     auto result = new TSet(*this);
     result->DelElem(Elem);
@@ -103,7 +114,7 @@ TSet& TSet::operator-(const int Elem) const // разность с элемен�
 }
 
 
-TSet& TSet::operator~() const // дополнение
+TSet &TSet::operator~() const // дополнение
 {
     auto result = new TSet(~this->BitField);
     return *result;
@@ -132,17 +143,51 @@ std::istream &operator>>(std::istream &istream, TSet &s) // ввод
     return istream;
 }
 
-std::ostream& operator<<(std::ostream &ostream, const TSet &s) // вывод
+std::ostream &operator<<(std::ostream &ostream, const TSet &s) // вывод
 {
     ostream << "{ ";
     bool first = true;
     for (int i = 0; i < s.GetMaxPower(); ++i) {
         if (s.IsMember(i)) {
-            ostream << (first? "": ", ") << i;
+            ostream << (first ? "" : ", ") << i;
             first = false;
         }
     }
     ostream << " }";
     return ostream;
 }
+
+void TSet::save(const char *name) {
+    std::ofstream file;
+    file.open(name);
+    if (file.is_open()) {
+        file << this->MaxPower << " : " << *this;
+        file.close();
+    } else throw "Can not open file. 🛠";
+}
+
+TSet& TSet::load(const char *name) {
+    std::fstream file(name, std::ios::in);
+
+    if (file.is_open()) {
+        size_t size;
+        file >> size;
+        auto set = new TSet(size);
+        file >> *set;
+        file.close();
+        return *set;
+    } else throw "Can not open file. 🛠";
+}
+
+TSet &TSet::getElementsDividedBy(const size_t Elem) const {
+    auto result = new TSet(this->MaxPower);
+    for (int i = 0; i < this->MaxPower; i += Elem) {
+        if (this->IsMember(i))
+            result->InsElem(i);
+    }
+
+    return *result;
+}
+
+
 

@@ -274,3 +274,46 @@ TEST(TSet, check_negation_operator) {
 
     EXPECT_EQ(expSet, set1);
 }
+
+TEST(TSet, save_to_file) {
+    const int size = 4;
+    const char* name = "test.txt";
+
+    TSet set1(size), set2(size);
+    // set1 = {1, 3}
+    set1.InsElem(1);
+    set1.InsElem(3);
+
+    EXPECT_NO_THROW(set1.save(name));
+}
+
+TEST(TSet, save_and_load_from_file) {
+    const int size = 4;
+    const char* name = "test.txt";
+
+    TSet set1(size), set2(size);
+    // set1 = {1, 3}
+    set1.InsElem(1);
+    set1.InsElem(3);
+
+    set1.save(name);
+    set2 = TSet::load(name);
+
+    EXPECT_EQ(set1, set2);
+}
+
+
+TEST(TSet, get_elements_divided_by) {
+    const int size = 10;
+    TSet set1(size), set2(size);
+    set1 = ~set1;
+    set1 = set1.getElementsDividedBy(2);
+
+    set2.InsElem(0);
+    set2.InsElem(2);
+    set2.InsElem(4);
+    set2.InsElem(6);
+    set2.InsElem(8);
+
+    EXPECT_EQ(set1, set2);
+}

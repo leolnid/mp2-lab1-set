@@ -10,37 +10,44 @@
 
 #include "tbitfield.h"
 
-class TSet
-{
+class TSet {
 private:
-  size_t MaxPower;    // максимальная мощность множества
-  TBitField BitField; // битовое поле для хранения характеристического вектора
+    size_t MaxPower;    // максимальная мощность множества
+    TBitField BitField; // битовое поле для хранения характеристического вектора
 public:
-  TSet(size_t mp);
-  TSet(const TSet &s);       // конструктор копирования
-  TSet(const TBitField &bf); // конструктор преобразования типа
-  explicit operator TBitField(); // преобразование типа к битовому полю
+    TSet(size_t mp);
 
-  // доступ к битам
-  size_t GetMaxPower() const;     // максимальная мощность множества
-  void InsElem(const int Elem);       // включить элемент в множество
-  void DelElem(const int Elem);       // удалить элемент из множества
-  bool IsMember(const int Elem) const; // проверить наличие элемента в множестве
+    TSet(const TSet &s);       // конструктор копирования
+    TSet(const TBitField &bf); // конструктор преобразования типа
+    explicit operator TBitField(); // преобразование типа к битовому полю
 
-  // теоретико-множественные операции
-  bool operator== (const TSet &s) const; // сравнение
-  bool operator!= (const TSet &s) const; // сравнение
-  TSet& operator=(const TSet &s);  // присваивание
-  TSet& operator+ (const int Elem) const; // объединение с элементом
-                                   // элемент должен быть из того же универса
-  TSet& operator- (const int Elem) const; // разность с элементом
-                                   // элемент должен быть из того же универса
-  TSet& operator+ (const TSet &s) const;  // объединение
-  TSet& operator- (const TSet &s) const;  // объединение
-  TSet& operator* (const TSet &s) const;  // пересечение
-  TSet& operator~ () const;           // дополнение
+    // доступ к битам
+    size_t GetMaxPower() const;     // максимальная мощность множества
+    void InsElem(const int Elem);       // включить элемент в множество
+    void DelElem(const int Elem);       // удалить элемент из множества
+    void SwhElem(const int Elem);       // изменить элемент
+    bool IsMember(const int Elem) const; // проверить наличие элемента в множестве
 
-  friend std::istream &operator>>(std::istream &istream, TSet &bf);
-  friend std::ostream &operator<<(std::ostream &ostream, const TSet &bf);
+    // теоретико-множественные операции
+    bool operator==(const TSet &s) const; // сравнение
+    bool operator!=(const TSet &s) const; // сравнение
+    TSet &operator=(const TSet &s);  // присваивание
+    TSet &operator+(const int Elem) const; // объединение с элементом
+    // элемент должен быть из того же универса
+    TSet &operator-(const int Elem) const; // разность с элементом
+    // элемент должен быть из того же универса
+    TSet &operator+(const TSet &s) const;  // объединение
+    TSet &operator-(const TSet &s) const;  // объединение
+    TSet &operator*(const TSet &s) const;  // пересечение
+    TSet &operator~() const;           // дополнение
+
+    TSet& getElementsDividedBy(const size_t Elem) const;
+
+    friend std::istream &operator>>(std::istream &istream, TSet &bf);
+    friend std::ostream &operator<<(std::ostream &ostream, const TSet &bf);
+
+    static TSet& load(const char* name); // Load set from file
+    void save(const char* name); // Save set to file
 };
+
 #endif

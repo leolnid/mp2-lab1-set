@@ -72,6 +72,13 @@ void TBitField::ClrBit(const size_t n) // очистить бит
     this->pMem[this->GetMemIndex(n)] &= ~this->GetMemMask(n);
 }
 
+void TBitField::SwhBit(const size_t n) {
+    if (n >= this->BitLen)
+        throw "Index out of bound exception. 🛠";
+
+    this->pMem[this->GetMemIndex(n)] ^= this->GetMemMask(n);
+}
+
 size_t TBitField::GetBit(const size_t n) const // получить значение бита
 {
     if (n >= this->BitLen)
@@ -79,6 +86,8 @@ size_t TBitField::GetBit(const size_t n) const // получить значен�
 
     return this->pMem[this->GetMemIndex(n)] & this->GetMemMask(n);
 }
+
+
 
 // битовые операции
 
@@ -217,3 +226,4 @@ size_t TBitField::BitLenToMem(const size_t n) const {
 size_t TBitField::BitLenToMask(const size_t n) const {
     return n & TYPE_MASK;
 }
+

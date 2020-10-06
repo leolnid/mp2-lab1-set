@@ -33,6 +33,7 @@ public:
     size_t GetLength() const;          // получить длину (к-во битов)           (#О)
     void SetBit(const size_t n);       // установить бит                       (#О4)
     void ClrBit(const size_t n);       // очистить бит                         (#П2)
+    void SwhBit(const size_t n);       // изменить бит
     size_t GetBit(const size_t n) const; // получить значение бита               (#Л1)
 
     // битовые операции
