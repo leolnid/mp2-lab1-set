@@ -1,0 +1,10 @@
+C:\Users\leo\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7319.72\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\Development\unn-cpp-2020-bit-set
+-- 
+-- General configuration for set
+-- ======================================
+-- 
+--    Configuration: Debug
+-- 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/Development/unn-cpp-2020-bit-set/cmake-build-debug

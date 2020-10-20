@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/tbitfield.h
+iostream
+-
+
+../include/tset.h
+tbitfield.h
+../include/tbitfield.h
+
+D:/Development/unn-cpp-2020-bit-set/src/tset.cpp
+fstream
+-
+tset.h
+D:/Development/unn-cpp-2020-bit-set/src/tset.h
+
